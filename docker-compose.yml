@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./.data/mongo:/data/mongo
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null
+
+  web:
+    build: .
+    ports:
+      - 5000:5000
+    restart: on-failure
+    volumes:
+      - .:/usr/src/app

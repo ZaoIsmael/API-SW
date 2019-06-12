@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<header>
+    <h1>{{ film.name }}</h1>
+</header>
+<div>
+    <p>
+        Director: {{ film.director }}
+    </p>
+    <hr>
+    <p>
+        Productor: {{ film.producer }}
+    </p>
+</div>
+{% endblock %}

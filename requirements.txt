@@ -1,0 +1,7 @@
+werkzeug
+bson
+pymongo
+mongokit
+click
+requests
+Flask

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/JavaScript-autoComplete/1.0.4/auto-complete.min.css"
+          rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+          rel="stylesheet"/>
+
+    <style type="text/css">
+        .card {
+            transition: 0.3s;
+            padding: 20px;
+            border-radius: 5px; /* 5px rounded corners */
+        }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Add some padding inside the card container */
+        .container {
+            padding: 2px 16px;
+        }
+
+        /* Add rounded corners to the top left and the top right corner of the image */
+        img {
+            border-radius: 5px 5px 0 0;
+        }
+    </style>
+</head>
+<body>
+<section class="content">
+    {% for message in get_flashed_messages() %}
+    <div class=flash style="background-color: darkseagreen; padding: 20px; color: white;">{{ message }}</div>
+    {% endfor %}
+    <h1>Historial de rutas</h1>
+    {% if session.urls %}
+    <ul>
+        {% for url in session.urls %}
+        <li>
+            <a href="{{ url }}"> {{ url }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="content">
+        {% block content %}
+        <h4>Buscador de peliculas</h4>
+        <section class="search">
+            <label for="search-input">
+                <input type="text" id="search-input" name="search">
+            </label>
+        </section>
+        <header>
+            <h1>Listado de personajes</h1>
+        </header>
+        <div class="owl-carousel owl-theme">
+            {% for people in peoples %}
+            <a href="peoples/{{ people._id }}">
+                <div class="card">
+                    <img src="data:image/png;base64,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"
+                         alt="Avatar" style="width:100%">
+                    <div class="container">
+                        <h4><b>{{ people.name }}</b></h4>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endblock %}
+    </div>
+</section>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel();
+
+        let xhr;
+        new autoComplete({
+            selector: 'input[name="search"]',
+            source: function (term, response) {
+                try {
+                    xhr.abort();
+                } catch (e) {
+                }
+                xhr = $.getJSON('/api/films', {q: term}, function (data) {
+                    response(data);
+                });
+            },
+            renderItem: function ({name, _id}, _) {
+                return `<a href="films/${_id.$oid}">
+                            <div >
+                                ${name}
+                            </div>
+                        </a>`;
+            }
+        });
+    });
+</script>
+</html>
